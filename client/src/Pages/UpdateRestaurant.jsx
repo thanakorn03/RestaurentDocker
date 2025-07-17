@@ -6,14 +6,14 @@ const UpdateRestaurant = () => {
     // Get the restaurant ID
     const { id } = useParams();
     const [restaurant, setRestaurant] = React.useState({
-        title: '',
+        name: '',
         type: '',
-        img: '',
+        imageURL: '',
     });
     
     // Get the restaurant by ID
     React.useEffect(()=>{
-        fetch(`http://localhost:3001/restaurants/${id}`)
+        fetch(`http://localhost:5000/api/v1/restaurants/${id}`)
         .then((response) => response.json())
         .then((data) => {
             setRestaurant(data);
@@ -29,7 +29,7 @@ const UpdateRestaurant = () => {
         e.preventDefault();
         
         try {
-            const response = await fetch(`http://localhost:3001/restaurants/${id}`, {
+            const response = await fetch(`http://localhost:5000/api/v1/restaurants/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const UpdateRestaurant = () => {
                 <div className="card w-full max-w-md bg-base-100 shadow-xl">
                     <figure className="px-10 pt-10">
                         <img
-                            src={restaurant.img || "https://media.istockphoto.com/id/2171382633/vector/user-profile-icon-anonymous-person-symbol-blank-avatar-graphic-vector-illustration.jpg?s=612x612&w=0&k=20&c=ZwOF6NfOR0zhYC44xOX06ryIPAUhDvAajrPsaZ6v1-w="}
+                            src={restaurant.imageURL || "https://media.istockphoto.com/id/2171382633/vector/user-profile-icon-anonymous-person-symbol-blank-avatar-graphic-vector-illustration.jpg?s=612x612&w=0&k=20&c=ZwOF6NfOR0zhYC44xOX06ryIPAUhDvAajrPsaZ6v1-w="}
                             alt="Upload"
                             className="rounded-xl w-32 h-32 object-cover"
                         />
@@ -72,9 +72,9 @@ const UpdateRestaurant = () => {
                                     type="text"
                                     placeholder="Name here"
                                     className="input input-bordered w-full"
-                                    name="title"
+                                    name="name"
                                     onChange={handleChange}
-                                    value={restaurant.title}
+                                    value={restaurant.name}
                                     required
                                 />
                             </div>
@@ -100,9 +100,9 @@ const UpdateRestaurant = () => {
                                     type="text"
                                     placeholder="URL รูปภาพ"
                                     className="input input-bordered w-full"
-                                    name="img"
+                                    name="imageURL"
                                     onChange={handleChange}
-                                    value={restaurant.img}
+                                    value={restaurant.imageURL}
                                     required
                                 />
                             </div>

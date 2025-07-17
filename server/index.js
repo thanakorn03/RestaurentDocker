@@ -3,6 +3,7 @@ import restaurentsRoutes from './Routes/restaurentsRoutes.js';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import cors from 'cors';
 
 // Find the directory of this file
 const __filename = fileURLToPath(import.meta.url);
@@ -16,6 +17,11 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(cors({
+  origin: ["http://localhost:5173", "127.0.0.1:5173"], // Allow all origins, adjust as needed
+  methods: 'GET,POST,PUT,DELETE', // Allow specific methods
+  allowedHeaders: 'Content-Type,Authorization', // Allow specific headers
+}));
 
 app.get('/', (req, res) => {
   res.send('Restaurant Useful API 555')

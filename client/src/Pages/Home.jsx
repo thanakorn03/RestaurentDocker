@@ -9,7 +9,7 @@ const Home = () => {
 
   const fetchRestaurants = async () => {
     try {
-      const response = await fetch('http://localhost:3001/restaurants');
+      const response = await fetch('http://localhost:5000/api/v1/restaurants');
       const data = await response.json();
       setRestaurants(data);
       setFilteredRestaurants(data);
@@ -29,7 +29,7 @@ const Home = () => {
       setFilteredRestaurants(restaurants);
     } else {
       const filtered = restaurants.filter(restaurant =>
-        restaurant.title.toLowerCase().includes(searchTerm) ||
+        restaurant.name.toLowerCase().includes(searchTerm) ||
         restaurant.type.toLowerCase().includes(searchTerm)
       );
       setFilteredRestaurants(filtered);

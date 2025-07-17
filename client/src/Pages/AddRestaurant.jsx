@@ -3,33 +3,32 @@ import Navbar from '../Component/Navbar'
 
 const AddRestaurant = () => {
     const [restaurant, setRestaurant] = React.useState({
-        title: '',
+        name: '',
         type: '',
-        img: '',
+        imageURL: '',
     });
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setRestaurant({...restaurant, [name]: value});
+        const { name, value } = e.target;
+        setRestaurant({ ...restaurant, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
         try {
-            const response = await fetch('http://localhost:3001/restaurants', {
+            const response = await fetch('http://localhost:5000/api/v1/restaurants', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(restaurant),
             });
-
             if (response.ok) {
                 alert('Restaurant added successfully');
-                setRestaurant({ title: '', type: '', img: '' });
+                setRestaurant({ name: '', type: '', imageURL: '' });
             } else {
-                alert('Failed to add restaurant');
+                const errorText = await response.text();
+                alert('Failed to add restaurant: ' + errorText);
             }
         } catch (error) {
             console.log('Error adding restaurant:', error);
@@ -45,7 +44,7 @@ const AddRestaurant = () => {
                 <div className="card w-full max-w-md bg-base-100 shadow-xl">
                     <figure className="px-10 pt-10">
                         <img
-                            src={restaurant.img || "https://media.istockphoto.com/id/2171382633/vector/user-profile-icon-anonymous-person-symbol-blank-avatar-graphic-vector-illustration.jpg?s=612x612&w=0&k=20&c=ZwOF6NfOR0zhYC44xOX06ryIPAUhDvAajrPsaZ6v1-w="}
+                            src={restaurant.imageURL || "https://media.istockphoto.com/id/2171382633/vector/user-profile-icon-anonymous-person-symbol-blank-avatar-graphic-vector-illustration.jpg?s=612x612&w=0&k=20&c=ZwOF6NfOR0zhYC44xOX06ryIPAUhDvAajrPsaZ6v1-w="}
                             alt="Upload"
                             className="rounded-xl w-32 h-32 object-cover"
                         />
@@ -60,9 +59,9 @@ const AddRestaurant = () => {
                                     type="text"
                                     placeholder="Name here"
                                     className="input input-bordered w-full"
-                                    name="title"
+                                    name="name"
                                     onChange={handleChange}
-                                    value={restaurant.title}
+                                    value={restaurant.name}
                                     required
                                 />
                             </div>
@@ -88,9 +87,9 @@ const AddRestaurant = () => {
                                     type="text"
                                     placeholder="URL รูปภาพ"
                                     className="input input-bordered w-full"
-                                    name="img"
+                                    name="imageURL"
                                     onChange={handleChange}
-                                    value={restaurant.img}
+                                    value={restaurant.imageURL}
                                     required
                                 />
                             </div>
