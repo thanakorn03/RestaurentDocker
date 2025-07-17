@@ -1,32 +1,36 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../model/db.js";
+import sequelize from "./db.js";
 
-const Restaurents = sequelize.define("restaurents", {
+const Restaurant = sequelize.define('restaurants', {
     id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true
     },
-    name: {
+     name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
     type: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
     },
-    imageUrl: {
+    imageURL: {
         type: DataTypes.STRING,
-        allowNull: false,
-    },
+     allowNull: false
+    }
+}, {
+  tableName: 'restaurants',
+  timestamps: true
 });
 
-Restaurents.sync({ force: false })
-    .then(() => {
-        console.log("Table created or already exists");
-    })
-    .catch((error) => {
-        console.log("Error creating table", error);
-    });
+// Sync model to create table if not exists
+Restaurant.sync({ alter: true })
+  .then(() => {
+    console.log('Table "restaurants" is ready');
+  })
+  .catch((error) => {
+    console.error('Error syncing table:', error);
+  });
 
-export default Restaurents;
+export default Restaurant;
